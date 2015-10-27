@@ -19,7 +19,7 @@ And then execute:
 ```ruby
 client = Kahuna::Client.new(
   secret_key: 'secret',
-  api_secret: 'test_api',
+  api_key: 'test_api',
   env: 'staging || production'
 )
 
