@@ -24,7 +24,7 @@ client = Kahuna::Client.new(
 )
 
 response = client.populate_campaign({
-  campaign_id: '1234',
+  campaign_id: 1234,
   cred_type: 'email',
   target_global_control: false,
   observe_rate_limiting: false,
