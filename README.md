@@ -34,10 +34,10 @@ response = client.populate_campaign({
   },
   recipient_list: [
     {
-      'k_to' => [
+      k_to: [
         'yeouchien@gmail.com'
       ],
-      'breakfast' => 'bread'
+      breakfast: 'bread'
     }
   ]
 })
