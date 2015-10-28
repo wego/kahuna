@@ -53,11 +53,11 @@ describe Kahuna::Client do
   describe '#populate_campaign' do
     it 'response status code of 200' do
       stub_request(:post, "https://test_secret:test_api@tap-nexus.appspot.com/api/campaign/populate?env=s").
-        with(:body => "{\"campaign_config\":{\"target_global_control\":false,\"observe_rate_limiting\":false,\"campaign_id\":\"1234\",\"cred_type\":\"email\"},\"default_params\":{},\"recipient_list\":[{\"k_to\":[\"yc@gmail.com\"],\"breakfast\":\"bread\"}]}",
+        with(:body => "{\"campaign_config\":{\"target_global_control\":false,\"observe_rate_limiting\":false,\"campaign_id\":1234,\"cred_type\":\"email\"},\"default_params\":{},\"recipient_list\":[{\"k_to\":[\"yc@gmail.com\"],\"breakfast\":\"bread\"}]}",
              :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.0'}).
         to_return(:status => 200, :body => "", :headers => {})
       body = {
-        campaign_id: '1234',
+        campaign_id: 1234,
         cred_type: 'email',
         recipient_list: [
           {

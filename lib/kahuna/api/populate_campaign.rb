@@ -29,6 +29,7 @@ module Kahuna
 
       def validate
         raise(ArgumentError, 'campaign_id is missing') if @campaign_id.nil?
+        raise(ArgumentError, 'campaign_id should be an integer') unless @campaign_id.is_a?(Integer)
         raise(ArgumentError, 'cred_type should be one of \'username\', \'email\', \'fbid\', \'twtr\', \'lnk\', \'user_id\', \'token\'') unless CRED_TYPES.include?(@cred_type)
         raise(ArgumentError, 'target_global_control should be \'true\' or \'false\'') unless [true, false].include?(@target_global_control)
         raise(ArgumentError, 'observe_rate_limiting should be \'true\' or \'false\'') unless [true, false].include?(@observe_rate_limiting)
