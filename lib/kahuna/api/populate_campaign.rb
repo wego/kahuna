@@ -37,9 +37,9 @@ module Kahuna
         raise(ArgumentError, 'recipient_list size should be larger than 1') if @recipient_list.size < 1
         @recipient_list.each do |r|
           raise(ArgumentError, 'recipient should be a Hash') unless r.is_a?(Hash)
-          raise(ArgumentError, 'recipient should have \'k_to\' hash key') unless r.has_key?('k_to')
-          raise(ArgumentError, 'recipient \'k_to\' should be an Array') unless r['k_to'].is_a?(Array)
-          raise(ArgumentError, 'recipient \'k_to\' size should be larger than 1') if r['k_to'].size < 1
+          raise(ArgumentError, 'recipient should have :k_to hash key') unless r.has_key?(:k_to)
+          raise(ArgumentError, 'recipient :k_to should be an Array') unless r[:k_to].is_a?(Array)
+          raise(ArgumentError, 'recipient :k_to size should be larger than 1') if r[:k_to].size < 1
         end
       end
     end

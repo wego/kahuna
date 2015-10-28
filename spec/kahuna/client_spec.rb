@@ -61,10 +61,10 @@ describe Kahuna::Client do
         cred_type: 'email',
         recipient_list: [
           {
-            'k_to' => [
+            k_to: [
               'yc@gmail.com'
             ],
-            'breakfast' => 'bread'
+            breakfast: 'bread'
           }
         ]
       }
