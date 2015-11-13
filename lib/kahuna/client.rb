@@ -17,5 +17,10 @@ module Kahuna
       campaign = Api::PopulateCampaign.new(body)
       @http_client.post("#{Api::PopulateCampaign::ENDPOINT}?env=#{@env}", campaign.request_body)
     end
+
+    def job_status(job_id)
+      job_status = Api::JobStatus.new(job_id)
+      @http_client.get(job_status.request_url(@env))
+    end
   end
 end

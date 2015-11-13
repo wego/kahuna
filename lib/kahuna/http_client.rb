@@ -17,5 +17,9 @@ module Kahuna
         req.body = request_body
       end
     end
+
+    def get(endpoint)
+      @connection.get endpoint
+    end
   end
 end

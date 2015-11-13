@@ -71,4 +71,13 @@ describe Kahuna::Client do
       expect(client.populate_campaign(body).status).to(eq(200))
     end
   end
+
+  describe '#job_status' do
+    it 'response status code of 200' do
+      stub_request(:get, "https://test_secret:test_api@tap-nexus.appspot.com/api/campaign/populate/jobid?env=s").
+        with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Faraday v0.9.0'}).
+        to_return(:status => 200, :body => "", :headers => {})
+      expect(client.job_status('jobid').status).to(eq(200))
+    end
+  end
 end
