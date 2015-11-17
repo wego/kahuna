@@ -22,5 +22,10 @@ module Kahuna
       job_status = Api::JobStatus.new(job_id)
       @http_client.get(job_status.request_url(@env))
     end
+
+    def attribute(user_attributes)
+      attributes = Api::Attribute.new(user_attributes)
+      @http_client.post("#{Api::Attribute::ENDPOINT}?env=#{@env}", attributes.request_body)
+    end
   end
 end

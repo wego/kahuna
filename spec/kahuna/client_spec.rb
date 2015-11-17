@@ -80,4 +80,24 @@ describe Kahuna::Client do
       expect(client.job_status('jobid').status).to(eq(200))
     end
   end
+
+  describe '#attribute' do
+    it 'response status code of 200' do
+      stub_request(:post, "https://test_secret:test_api@tap-nexus.appspot.com/api/userattributes?env=s").
+        with(:body => "{\"user_attributes_array\":[{\"target\":{\"email\":\"email@gmail.com\"},\"attributes\":{\"first_name\":\"fart\"}}]}",
+             :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.0'}).
+        to_return(:status => 200, :body => "", :headers => {})
+      body = [
+        {
+          target: {
+            email: 'email@gmail.com'
+          },
+          attributes: {
+            first_name: 'fart'
+          }
+        }
+      ]
+      expect(client.attribute(body).status).to(eq(200))
+    end
+  end
 end
