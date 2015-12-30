@@ -54,7 +54,7 @@ describe Kahuna::Client do
     it 'response status code of 200' do
       stub_request(:post, "https://test_secret:test_api@tap-nexus.appspot.com/api/campaign/populate?env=s").
         with(:body => "{\"campaign_config\":{\"target_global_control\":false,\"observe_rate_limiting\":false,\"campaign_id\":1234,\"cred_type\":\"email\"},\"default_params\":{},\"recipient_list\":[{\"k_to\":[\"yc@gmail.com\"],\"breakfast\":\"bread\"}]}",
-             :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.0'}).
+             :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.2'}).
         to_return(:status => 200, :body => "", :headers => {})
       body = {
         campaign_id: 1234,
@@ -75,7 +75,7 @@ describe Kahuna::Client do
   describe '#job_status' do
     it 'response status code of 200' do
       stub_request(:get, "https://test_secret:test_api@tap-nexus.appspot.com/api/campaign/populate/jobid?env=s").
-        with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Faraday v0.9.0'}).
+        with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Faraday v0.9.2'}).
         to_return(:status => 200, :body => "", :headers => {})
       expect(client.job_status('jobid').status).to(eq(200))
     end
@@ -85,7 +85,7 @@ describe Kahuna::Client do
     it 'response status code of 200' do
       stub_request(:post, "https://test_secret:test_api@tap-nexus.appspot.com/api/userattributes?env=s").
         with(:body => "{\"user_attributes_array\":[{\"target\":{\"email\":\"email@gmail.com\"},\"attributes\":{\"first_name\":\"fart\"}}]}",
-             :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.0'}).
+             :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.2'}).
         to_return(:status => 200, :body => "", :headers => {})
       body = [
         {
@@ -98,6 +98,46 @@ describe Kahuna::Client do
         }
       ]
       expect(client.attribute(body).status).to(eq(200))
+    end
+  end
+
+  describe '#push_user_attributes' do
+    it 'response status code of 200' do
+      stub_request(:post, "https://test_secret:test_api@tap-nexus.appspot.com/api/userattributes?env=s").
+          with(:body => "{\"user_attributes_array\":[{\"target\":{\"email\":\"email@gmail.com\"},\"attributes\":{\"first_name\":\"fart\"}}]}",
+               :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.2'}).
+          to_return(:status => 200, :body => "", :headers => {})
+
+      user_attributes = {
+        target: {
+          email: 'email@gmail.com'
+        },
+        attributes: {
+          first_name: 'fart'
+        }
+      }
+
+      expect(client.push_user_attributes(user_attributes).status).to(eq(200))
+    end
+  end
+
+  describe '#send_adaptive_email_campaign' do
+    it 'response status code of 200' do
+      stub_request(:post, "https://test_secret:test_api@tap-nexus.appspot.com/api/campaign/populate?env=s").
+          with(:body => "{\"campaign_config\":{\"target_global_control\":false,\"observe_rate_limiting\":false,\"campaign_id\":1234,\"cred_type\":\"email\"},\"default_params\":{},\"recipient_list\":[{\"k_to\":[\"yc@gmail.com\"],\"breakfast\":\"bread\"}]}",
+               :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.2'}).
+          to_return(:status => 200, :body => "", :headers => {})
+
+      recipient_list = [
+        {
+          k_to: [
+            'yc@gmail.com'
+          ],
+          breakfast: 'bread'
+        }
+      ]
+
+      expect(client.send_adaptive_email_campaign(1234, recipient_list).status).to(eq(200))
     end
   end
 end

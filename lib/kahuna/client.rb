@@ -28,9 +28,8 @@ module Kahuna
       @http_client.post("#{Api::PopulateCampaign::ENDPOINT}?env=#{@env}", campaign.request_body)
     end
 
-    def push_user_attributes(attributes)
-      attributes_array = [attributes]
-      attributes = Api::Attribute.new([attributes_array])
+    def push_user_attributes(user_attributes)
+      attributes = Api::Attribute.new([user_attributes])
       @http_client.post("#{Api::Attribute::ENDPOINT}?env=#{@env}", attributes.request_body)
     end
 
