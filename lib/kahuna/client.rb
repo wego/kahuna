@@ -29,7 +29,8 @@ module Kahuna
     end
 
     def push_user_attributes(attributes)
-      attributes = Api::Attribute.new(attributes)
+      attributes_array = [attributes]
+      attributes = Api::Attribute.new([attributes_array])
       @http_client.post("#{Api::Attribute::ENDPOINT}?env=#{@env}", attributes.request_body)
     end
 
