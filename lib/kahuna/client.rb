@@ -18,6 +18,18 @@ module Kahuna
       @http_client.post("#{Api::PopulateCampaign::ENDPOINT}?env=#{@env}", campaign.request_body)
     end
 
+    def send_adaptive_email_campaign(body)
+      # TOMHACK refactor Kahuna gem later
+      body[:cred_type] = 'email'
+      campaign = Api::PopulateCampaign.new(body)
+      @http_client.post("#{Api::PopulateCampaign::ENDPOINT}?env=#{@env}", campaign.request_body)
+    end
+
+    def push_user_attributes(attributes)
+      attributes = Api::Attribute.new(attributes)
+      @http_client.post("#{Api::Attribute::ENDPOINT}?env=#{@env}", attributes.request_body)
+    end
+
     def job_status(job_id)
       job_status = Api::JobStatus.new(job_id)
       @http_client.get(job_status.request_url(@env))
