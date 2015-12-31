@@ -30,13 +30,7 @@ describe Kahuna::HttpClient do
     it 'returns status code of 200 if username and password are correct' do
       stub_request(:post, "http://username:password@testkahuna.com/api/campaign/populate").
         with(body: "{\"key\":\"value\"}",
-              headers: {
-                'Accept' => '*/*',
-                'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 
-                'Content-Type' => 'application/json', 
-                'User-Agent' => 'Faraday v0.9.0'
-              }
-        ).
+             headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.2'}).
         to_return(status: 200)
       client = Kahuna::HttpClient.new('http://testkahuna.com', 'username', 'password')
       expect(client.post('/api/campaign/populate', { 'key' => 'value' }.to_json).status).to(eq(200))
@@ -45,12 +39,7 @@ describe Kahuna::HttpClient do
     it 'returns status code of 401 if username and password are wrong' do
       stub_request(:post, "http://wusernamew:wpasswordw@testkahuna.com/api/campaign/populate").
         with(body: "{\"key\":\"value\"}",
-              headers: {
-                'Accept' => '*/*',
-                'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 
-                'Content-Type' => 'application/json', 
-                'User-Agent' => 'Faraday v0.9.0'
-              }
+              headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.2'}
         ).
         to_return(status: 401)
       client = Kahuna::HttpClient.new('http://testkahuna.com', 'wusernamew', 'wpasswordw')

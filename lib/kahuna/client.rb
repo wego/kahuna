@@ -18,6 +18,26 @@ module Kahuna
       @http_client.post("#{Api::PopulateCampaign::ENDPOINT}?env=#{@env}", campaign.request_body)
     end
 
+    def send_adaptive_email_campaign(campaign_id, recipients)
+      recipients = [recipients] if recipients.is_a? Hash
+      campaign = Api::PopulateCampaign.new(
+        campaign_id: campaign_id,
+        cred_type: 'email',
+        recipient_list: recipients
+      )
+      @http_client.post("#{Api::PopulateCampaign::ENDPOINT}?env=#{@env}", campaign.request_body)
+    end
+
+    def update_user_attributes_by_email(email, attributes)
+      api_attribute = Api::Attribute.new([
+        {
+          target: { email: email },
+          attributes: attributes
+        }
+      ])
+      @http_client.post("#{Api::Attribute::ENDPOINT}?env=#{@env}", api_attribute.request_body)
+    end
+
     def job_status(job_id)
       job_status = Api::JobStatus.new(job_id)
       @http_client.get(job_status.request_url(@env))
