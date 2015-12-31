@@ -101,23 +101,14 @@ describe Kahuna::Client do
     end
   end
 
-  describe '#push_user_attributes' do
+  describe '#update_user_attributes_by_email' do
     it 'response status code of 200' do
       stub_request(:post, "https://test_secret:test_api@tap-nexus.appspot.com/api/userattributes?env=s").
           with(:body => "{\"user_attributes_array\":[{\"target\":{\"email\":\"email@gmail.com\"},\"attributes\":{\"first_name\":\"fart\"}}]}",
                :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.2'}).
           to_return(:status => 200, :body => "", :headers => {})
 
-      user_attributes = {
-        target: {
-          email: 'email@gmail.com'
-        },
-        attributes: {
-          first_name: 'fart'
-        }
-      }
-
-      expect(client.push_user_attributes(user_attributes).status).to(eq(200))
+      expect(client.update_user_attributes_by_email('email@gmail.com', first_name: 'fart').status).to(eq(200))
     end
   end
 
