@@ -21,9 +21,9 @@ module Kahuna
     def send_adaptive_email_campaign(campaign_id, recipients)
       recipients = [recipients] if recipients.is_a? Hash
       campaign = Api::PopulateCampaign.new(
-          campaign_id: campaign_id,
-          cred_type: 'email',
-          recipient_list: recipients
+        campaign_id: campaign_id,
+        cred_type: 'email',
+        recipient_list: recipients
       )
       @http_client.post("#{Api::PopulateCampaign::ENDPOINT}?env=#{@env}", campaign.request_body)
     end
